@@ -286,6 +286,8 @@
         </div>
         
         <div class="module-selector">
+            <button class="module-btn" onclick="startQuiz('module04', event)">Module 04: 프로세스 모델링</button>
+            <button class="module-btn" onclick="startQuiz('module05', event)">Module 05: Function Poin</button>
             <button class="module-btn" onclick="startQuiz('module06', event)">Module 06: SW 테스트</button>
             <button class="module-btn" onclick="startQuiz('module07', event)">Module 07: SW 개발방법론</button>
         </div>
@@ -626,6 +628,297 @@
                     explanation: "SW 개발방법론은 프로젝트 관리, 요구사항 관리, 설계, 구현, 테스트, 배포 및 유지보수 등 SDLC의 모든 단계를 다룹니다. 하드웨어 설계는 소프트웨어 개발방법론의 직접적인 영역이 아닙니다."
                 }
             ]
+            module04: [    
+            {
+                question: "프로세스 모델링에서 업무 구성도의 주요 목적은 무엇인가요?",
+                options: [
+                    "업무 프로세스 간의 순서를 정의하는 것",
+                    "시스템의 범위를 명확히 하고 외부와의 상호작용을 표현하는 것",
+                    "업무의 최소 단위를 도출하는 것",
+                    "비즈니스 로직을 상세히 기술하는 것"
+                ],
+                correct: 1,
+                explanation: "업무 구성도는 시스템의 범위(Scope)를 명확히 하고 외부와의 상호작용(Interface)을 표현하는 다이어그램입니다. 시스템 업무 범위 파악 및 타 시스템과의 상호작용 파악에 사용됩니다."
+            },
+            {
+                question: "업무 기능 분해도 작성 시 적용되는 MECE 원칙이 의미하는 것은?",
+                options: [
+                    "Maximum Efficiency Collective Enhancement",
+                    "Mutually Exclusive Collectively Exhaustive",
+                    "Minimum Error Correction Execution",
+                    "Multiple Entry Collaborative Execution"
+                ],
+                correct: 1,
+                explanation: "MECE는 Mutually Exclusive Collectively Exhaustive의 약자로, '상호 배타적이면서 전체적으로 포괄적'이라는 의미입니다. 업무 기능을 중복 없이 빠짐없이 분류하는 원칙입니다."
+            },
+            {
+                question: "업무 흐름도의 활용 목적으로 적절하지 않은 것은?",
+                options: [
+                    "시스템 지원 프로세스 여부 확인",
+                    "통합 테스트 시나리오 도출",
+                    "신규 투입 인력 업무 파악",
+                    "데이터베이스 테이블 구조 설계"
+                ],
+                correct: 3,
+                explanation: "업무 흐름도는 업무 프로세스 간의 선후행 관계와 정보 흐름을 나타내며, 시스템 지원 프로세스 확인, 통합 테스트 시나리오 도출, 신규 인력 업무 파악 등에 활용됩니다. 데이터베이스 테이블 구조 설계는 데이터 모델링 영역입니다."
+            },
+            {
+                question: "UI 설계 시 웹/모바일 접근성 원칙에 포함되지 않는 것은?",
+                options: [
+                    "인식의 용이성",
+                    "운용의 용이성",
+                    "이해의 용이성",
+                    "확장의 용이성"
+                ],
+                correct: 3,
+                explanation: "웹/모바일 접근성 원칙은 인식의 용이성, 운용의 용이성, 이해의 용이성, 견고성 4가지입니다. 확장의 용이성은 접근성 원칙에 포함되지 않습니다."
+            },
+            {
+                question: "정보 구조도(IA) 설계 시 권장되는 기준은?",
+                options: [
+                    "폭 5개 내외, 깊이 3단계 이하",
+                    "폭 7개 내외, 깊이 4~5단계 이하",
+                    "폭 10개 내외, 깊이 6~7단계 이하",
+                    "폭과 깊이에 제한 없음"
+                ],
+                correct: 1,
+                explanation: "정보 구조도 설계 시 폭(옵션 수)은 7개 내외, 깊이(계층 단계 수)는 4~5단계 이하로 설계하는 것이 바람직합니다. 이는 사용자의 인지 부하를 줄이고 탐색을 용이하게 합니다."
+            },
+            {
+                question: "비즈니스 로직 설계에서 수행하는 작업이 아닌 것은?",
+                options: [
+                    "비즈니스 클래스 로직 작성",
+                    "모듈화 반영",
+                    "SW 아키텍처 반영",
+                    "사용자 인터페이스 프로토타입 제작"
+                ],
+                correct: 3,
+                explanation: "비즈니스 로직 설계는 서버 측의 비즈니스 로직을 상세히 기술하는 작업으로, 비즈니스 클래스 로직 작성, 모듈화 반영, SW 아키텍처 반영 등을 포함합니다. 사용자 인터페이스 프로토타입 제작은 화면 설계 영역입니다."
+            },
+            {
+                question: "인터페이스 통신 방법에 해당하지 않는 것은?",
+                options: [
+                    "Http",
+                    "Socket",
+                    "Web Service",
+                    "MECE"
+                ],
+                correct: 3,
+                explanation: "인터페이스 통신 방법에는 Http, Socket, FTP, Web Service, DB Link 등이 있습니다. MECE는 업무 기능 분해도 작성 시 적용되는 원칙으로 통신 방법이 아닙니다."
+            },
+            {
+                question: "인터페이스 전송 방식의 종류로 올바른 것은?",
+                options: [
+                    "단방향, 양방향, 다방향",
+                    "실시간, 배치, 지연 처리",
+                    "동기, 비동기, 준동기",
+                    "내부, 외부, 혼합"
+                ],
+                correct: 1,
+                explanation: "인터페이스 전송 방식에는 실시간, 배치, 지연 처리 등이 있습니다. 단방향/양방향은 통신 유형이고, 내부/외부는 인터페이스 구분입니다."
+            },
+            {
+                question: "UI 흐름 설계와 UI 상세 설계의 차이점으로 올바른 것은?",
+                options: [
+                    "UI 흐름 설계는 데이터 구조를, UI 상세 설계는 비즈니스 로직을 다룬다",
+                    "UI 흐름 설계는 화면 간 전환을, UI 상세 설계는 각 화면의 구성 요소를 다룬다",
+                    "UI 흐름 설계는 백엔드를, UI 상세 설계는 프론트엔드를 다룬다",
+                    "두 설계 간에는 본질적인 차이가 없다"
+                ],
+                correct: 1,
+                explanation: "UI 흐름 설계는 화면 간의 전환 및 사용자 시나리오 흐름을 나타내고, UI 상세 설계는 각 화면의 구성 요소, 동작, 예외 처리 등을 구체적으로 기술합니다."
+            },
+            {
+                question: "프로세스 모델링의 올바른 진행 순서는?",
+                options: [
+                    "업무 흐름도 → 업무 구성도 → 업무 기능 분해도 → 통합 업무 흐름도",
+                    "업무 구성도 → 업무 기능 분해도 → 업무 흐름도 → 통합 업무 흐름도",
+                    "업무 기능 분해도 → 업무 구성도 → 통합 업무 흐름도 → 업무 흐름도",
+                    "통합 업무 흐름도 → 업무 흐름도 → 업무 기능 분해도 → 업무 구성도"
+                ],
+                correct: 1,
+                explanation: "프로세스 모델링은 업무 구성도 작성 → 업무 기능 분해도 작성 → 업무 흐름도 작성 → 통합 업무 흐름도 작성 순으로 진행됩니다."
+            },
+            {
+                question: "인터페이스 데이터 형식으로 사용되지 않는 것은?",
+                options: [
+                    "Fixed Length",
+                    "JSON",
+                    "XML",
+                    "MECE"
+                ],
+                correct: 3,
+                explanation: "인터페이스 데이터 형식에는 Fixed Length, Delimiter, JSON, XML 등이 있습니다. MECE는 업무 기능 분해 원칙으로 데이터 형식이 아닙니다."
+            },
+            {
+                question: "UI 설계의 설계 원칙에 포함되지 않는 것은?",
+                options: [
+                    "일관성, 유연성",
+                    "효율성, 명확성",
+                    "가독성, 사용성",
+                    "복잡성, 다양성"
+                ],
+                correct: 3,
+                explanation: "UI 설계 원칙에는 일관성, 유연성, 효율성, 명확성, 가독성, 사용성, 접근성 등이 포함됩니다. 복잡성과 다양성은 UI 설계에서 지양해야 할 요소입니다."
+            }
+        ];
+
+            module05: [    
+            {
+                question: "Function Point의 정의로 가장 적절한 것은?",
+                options: [
+                    "프로그래밍 언어별 코드 라인 수를 측정하는 방법",
+                    "사용자 관점에서 소프트웨어 기능을 정량적으로 산정하는 방법",
+                    "시스템 성능을 측정하는 지표",
+                    "개발자의 생산성을 평가하는 척도"
+                ],
+                correct: 1,
+                explanation: "Function Point는 '사용자 관점에서의 사용자가 요구하고 사용자에게 인도되는 기능을 정량적으로 산정하는 소프트웨어 규모 측정방법'입니다."
+            },
+            {
+                question: "ILF(Internal Logical File)의 정의로 올바른 것은?",
+                options: [
+                    "외부 시스템에서 참조하는 데이터",
+                    "측정 대상 애플리케이션 경계 내부에 유지되는 논리적 데이터 그룹",
+                    "애플리케이션 경계 외부로 출력되는 데이터",
+                    "시스템 간 인터페이스를 위한 데이터"
+                ],
+                correct: 1,
+                explanation: "ILF(Internal Logical File)는 사용자가 식별할 수 있는 논리적으로 연관된 데이터 그룹 또는 제어 정보로 측정 대상 애플리케이션 경계 내부에 유지되는 데이터입니다."
+            },
+            {
+                question: "EIF(External Interface File)와 ILF의 차이점은?",
+                options: [
+                    "EIF는 입력 데이터, ILF는 출력 데이터",
+                    "EIF는 외부 시스템의 데이터를 참조, ILF는 내부에서 유지되는 데이터",
+                    "EIF는 정적 데이터, ILF는 동적 데이터",
+                    "EIF는 단순 조회, ILF는 복잡 처리"
+                ],
+                correct: 1,
+                explanation: "EIF는 측정 대상 애플리케이션 경계 내의 하나 이상의 단위 프로세스를 통해 참조된 데이터를 보관하는 외부 시스템의 데이터이고, ILF는 애플리케이션 경계 내부에 유지되는 데이터입니다."
+            },
+            {
+                question: "EO(External Output)의 특징으로 올바른 것은?",
+                options: [
+                    "단순히 데이터를 조회하여 출력하는 기능",
+                    "외부에서 데이터를 입력받는 기능",
+                    "평균, 합계 등 파생 데이터를 생성하거나 ILF를 갱신하는 기능",
+                    "외부 시스템의 파일을 참조하는 기능"
+                ],
+                correct: 2,
+                explanation: "EO(External Output)는 평균, 합계 등 기타 수식에 의해 계산된 파생 데이터를 사용하거나, 하나 이상의 ILF를 갱신하거나, 파생 데이터를 생성하는 처리 로직을 포함합니다."
+            },
+            {
+                question: "EQ(External Inquiry)의 정의로 올바른 것은?",
+                options: [
+                    "복잡한 계산을 통해 데이터를 출력하는 기능",
+                    "ILF, EIF를 단순 조회하여 애플리케이션 경계 외부로 출력하는 기능",
+                    "외부에서 데이터를 입력받아 처리하는 기능",
+                    "시스템 내부 데이터를 갱신하는 기능"
+                ],
+                correct: 1,
+                explanation: "EQ(External Inquiry)는 ILF, EIF를 단순 조회하여 애플리케이션 경계 외부로 출력하는 기능입니다."
+            },
+            {
+                question: "Function Point의 5가지 구성 요소 중 데이터 기능에 해당하는 것은?",
+                options: [
+                    "EI, EO",
+                    "ILF, EIF",
+                    "EQ, EI",
+                    "EO, EQ"
+                ],
+                correct: 1,
+                explanation: "Function Point의 구성 요소 중 데이터 기능(Data Functions)에는 ILF(Internal Logical File)와 EIF(External Interface File)가 있습니다."
+            },
+            {
+                question: "트랜잭션 기능(Transactional Functions)에 포함되는 것은?",
+                options: [
+                    "ILF, EIF, EI",
+                    "EI, EO, EQ",
+                    "ILF, EO, EQ",
+                    "EIF, EI, EO"
+                ],
+                correct: 1,
+                explanation: "트랜잭션 기능(Transactional Functions)에는 EI(External Input), EO(External Output), EQ(External Inquiry)가 포함됩니다."
+            },
+            {
+                question: "SW 개발비 산정에서 기능점수 방식의 공식은?",
+                options: [
+                    "기능점수 X 기능점수 단가",
+                    "(기능점수 X 기능점수 단가 X 보정계수) + 직접 경비 + 이윤",
+                    "기능점수 + 직접 경비 + 이윤",
+                    "기능점수 X 보정계수"
+                ],
+                correct: 1,
+                explanation: "SW 개발비 산정에서 기능점수 방식은 '(기능점수 X 기능점수 단가 X 보정계수) + 직접 경비 + 이윤'으로 산정됩니다."
+            },
+            {
+                question: "Function Point 측정의 특징으로 올바르지 않은 것은?",
+                options: [
+                    "특정 프로그래밍 언어에 종속적이지 않음",
+                    "기능의 규모와 복잡도에 기반하여 산정",
+                    "소프트웨어 개발 비용 산정 가능",
+                    "코드 라인 수에 비례하여 산정"
+                ],
+                correct: 3,
+                explanation: "Function Point는 특정 프로그래밍 언어에 종속적이지 않고 기능의 규모와 복잡도에 기반하여 산정됩니다. 코드 라인 수와는 직접적인 관련이 없습니다."
+            },
+            {
+                question: "EI(External Input)의 특징으로 올바른 것은?",
+                options: [
+                    "단순히 데이터를 조회하는 기능",
+                    "하나 이상의 ILF를 유지하거나 애플리케이션 동작을 변경하는 기능",
+                    "파생 데이터를 생성하는 기능",
+                    "외부 시스템의 파일을 참조하는 기능"
+                ],
+                correct: 1,
+                explanation: "EI(External Input)는 하나 이상의 ILF를 유지하거나, 애플리케이션의 동작을 변경하기 위해 경계 내부로 유입되는 데이터나 제어 정보를 수신하는 처리 로직을 포함합니다."
+            },
+            {
+                question: "Function Point가 ISO/IEC 14143으로 표준화된 이유는?",
+                options: [
+                    "프로그래밍 언어 표준화를 위해",
+                    "SW Size 산정을 위한 국제표준으로 사용하기 위해",
+                    "데이터베이스 설계 표준화를 위해",
+                    "네트워크 프로토콜 표준화를 위해"
+                ],
+                correct: 1,
+                explanation: "Function Point는 ISO/IEC 14143(FSM; Functional Size Measurement)으로 SW Size 산정을 위한 국제표준으로 제정되었습니다."
+            },
+            {
+                question: "SW사업 대가산정 가이드에서 적용되는 보정계수는?",
+                options: [
+                    "언어 보정계수, 플랫폼 보정계수",
+                    "규모 보정계수, 애플리케이션 복잡도 보정계수",
+                    "성능 보정계수, 보안 보정계수",
+                    "개발자 보정계수, 일정 보정계수"
+                ],
+                correct: 1,
+                explanation: "SW사업 대가산정 가이드(2024)에 따라 규모 보정계수 및 애플리케이션 복잡도 보정계수가 적용될 수 있습니다."
+            },
+            {
+                question: "Function Point 측정의 주요 목적이 아닌 것은?",
+                options: [
+                    "소프트웨어 개발 비용 산정",
+                    "소프트웨어 유지관리 비용 산정",
+                    "소프트웨어 재개발 자원 소요 산정",
+                    "소프트웨어 코딩 스타일 평가"
+                ],
+                correct: 3,
+                explanation: "Function Point는 소프트웨어 개발, 유지관리 및 재개발을 위한 비용과 자원 소요 산정이 가능합니다. 코딩 스타일 평가는 Function Point의 목적이 아닙니다."
+            },
+            {
+                question: "데이터 기능과 트랜잭션 기능을 구분하는 기준은?",
+                options: [
+                    "데이터의 크기와 복잡도",
+                    "데이터 저장 여부와 처리 로직 유무",
+                    "내부/외부 시스템 구분",
+                    "실시간/배치 처리 구분"
+                ],
+                correct: 1,
+                explanation: "데이터 기능(ILF, EIF)은 데이터 저장과 관련되고, 트랜잭션 기능(EI, EO, EQ)은 데이터 처리 로직과 관련됩니다."
+            }
+        ];  
         };
 
         let currentModule = '';
