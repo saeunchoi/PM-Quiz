@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Mdodeling 퀴즈</title>
+    <style>
+        /* CSS 스타일은 변경 없이 그대로 유지됩니다. */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            min-height: 500px;
+            position: relative;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        
+        .module-selector {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .module-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .module-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .module-btn.active {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+        }
+        
+        .quiz-container {
+            display: none;
+        }
+        
+        .quiz-container.active {
+            display: block;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .question-counter {
+            background: #f0f0f0;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #666;
+        }
+        
+        .question {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #2196F3;
+        }
+        
+        .question h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .option {
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .option:hover {
+            border-color: #2196F3;
+            background: #f0f8ff;
+        }
+        
+        .option.selected {
+            border-color: #2196F3;
+            background: #e3f2fd;
+        }
+        
+        .option.correct {
+            border-color: #4CAF50;
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+        
+        .option.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .explanation {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #ff9800;
+            display: none;
+        }
+        
+        .explanation.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .explanation h4 {
+            color: #e65100;
+            margin-bottom: 10px;
+        }
+        
+        .explanation p {
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .next-btn {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .next-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .results h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        
+        .score {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .score.excellent { color: #4CAF50; }
+        .score.good { color: #2196F3; }
+        .score.average { color: #ff9800; }
+        .score.poor { color: #f44336; }
+        
+        .restart-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .intro {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .intro h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .intro p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🖥️ Process Mdodeling 퀴즈</h1>
+        </div>
+        
+        <div class="intro" id="intro">
+            <h2>모듈을 선택하여 퀴즈를 시작하세요</h2>
+            <p>각 모듈별로 10-20문제가 출제되며, 문제를 풀자마자 정답과 상세 해설이 표시됩니다.</p>
+        </div>
+        
+        <div class="module-selector">
+            <button class="module-btn" onclick="startQuiz('module06', event)">Module 06: SW 테스트</button>
+            <button class="module-btn" onclick="startQuiz('module07', event)">Module 07: SW 개발방법론</button>
+        </div>
+        
+        <div class="quiz-container" id="quiz-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            
+            <div class="question-header">
+                <div class="question-counter">
+                    <span id="current-question">1</span> / <span id="total-questions">15</span>
+                </div>
+            </div>
+            
+            <div class="question" id="question-container">
+                </div>
+            
+            <button class="next-btn" id="next-btn" onclick="nextQuestion()" disabled>다음 문제</button>
+        </div>
+        
+        <div class="results" id="results" style="display: none;">
+            </div>
+    </div>
+
+    <script>
+        const quizData = {
+            module06: [
+                {
+                    question: "SW 테스트의 주요 목적이 아닌 것은?",
+                    options: ["결함 발견", "요구사항 충족 여부 검증", "개발 속도 향상", "품질 개선"],
+                    correct: 2,
+                    explanation: "SW 테스트의 주요 목적은 결함 발견, 요구사항 충족 여부 검증, 품질 개선, 위험 감소, 신뢰성 향상입니다. 개발 속도 향상은 테스트의 직접적인 목적이 아닙니다."
+                },
+                {
+                    question: "SW 테스트 수행 절차의 올바른 순서는?",
+                    options: [
+                        "테스트 실행 → 테스트 계획 수립 → 사용자 요구 분석 → 테스트 케이스 설계",
+                        "사용자 요구 분석 → 테스트 계획 수립 → 테스트 케이스 설계 → 테스트 실행",
+                        "테스트 케이스 설계 → 테스트 계획 수립 → 사용자 요구 분석 → 테스트 실행",
+                        "테스트 계획 수립 → 사용자 요구 분석 → 테스트 실행 → 테스트 케이스 설계"
+                    ],
+                    correct: 1,
+                    explanation: "SW 테스트 수행 절차는 사용자 요구 분석 → 테스트 계획 수립 → 테스트 케이스 설계 → 테스트 실행 → 테스트 결함 관리의 순서로 진행됩니다."
+                },
+                {
+                    question: "테스트 시나리오와 테스트 케이스의 차이점으로 올바른 것은?",
+                    options: [
+                        "테스트 시나리오가 더 구체적이고 상세하다",
+                        "테스트 케이스가 더 포괄적이고 개념적이다",
+                        "테스트 시나리오는 포괄적 설명, 테스트 케이스는 상세한 명세",
+                        "둘 다 동일한 의미이다"
+                    ],
+                    correct: 2,
+                    explanation: "테스트 시나리오는 '특정 기능이나 시스템의 동작을 검증하기 위한 일련의 조건이나 단계에 대한 포괄적인 설명'이고, 테스트 케이스는 '입력값, 예상 출력값, 테스트 환경, 사전 조건 및 사후 조건 등을 명시한 상세한 명세'입니다."
+                },
+                {
+                    question: "단위 테스트에 대한 설명으로 옳지 않은 것은?",
+                    options: [
+                        "개발자가 직접 코드를 작성하여 테스트한다",
+                        "모듈 간의 인터페이스를 중점적으로 테스트한다",
+                        "JUnit과 같은 자동화 프레임워크를 활용한다",
+                        "코드의 가장 작은 단위가 의도대로 동작하는지 검증한다"
+                    ],
+                    correct: 1,
+                    explanation: "단위 테스트는 개발자가 작성한 코드의 가장 작은 단위(모듈, 함수 등)를 테스트하는 것입니다. 모듈 간의 인터페이스를 중점적으로 테스트하는 것은 통합 테스트의 목적입니다."
+                },
+                {
+                    question: "통합 테스트의 설계 방법으로 활용되지 않는 것은?",
+                    options: ["업무 기능 분해도", "업무 흐름도", "요구사항 정의서", "코드 커버리지 분석"],
+                    correct: 3,
+                    explanation: "통합 테스트 설계 방법으로는 업무 기능 분해도, 업무 흐름도, 요구사항 정의서, 단위 테스트 케이스 등이 활용됩니다. 코드 커버리지 분석은 단위 테스트에서 주로 사용되는 기법입니다."
+                },
+                {
+                    question: "통합 테스트의 수행 방식이 아닌 것은?",
+                    options: ["상향식(Bottom-Up)", "하향식(Top-Down)", "샌드위치(Sandwich)", "순환식(Circular)"],
+                    correct: 3,
+                    explanation: "통합 테스트의 수행 방식에는 상향식(Bottom-Up), 하향식(Top-Down), 샌드위치(Sandwich) 방식이 있습니다. 순환식(Circular)은 통합 테스트의 공식적인 수행 방식이 아닙니다."
+                },
+                {
+                    question: "인수 테스트의 유형이 아닌 것은?",
+                    options: ["사용자 인수 테스트(UAT)", "운영 인수 테스트(OAT)", "계약 인수 테스트(CAT)", "단위 인수 테스트(UIT)"],
+                    correct: 3,
+                    explanation: "인수 테스트의 유형에는 사용자 인수 테스트(UAT), 운영 인수 테스트(OAT), 계약 인수 테스트(CAT), 규제 인수 테스트(RAT) 등이 있습니다. 단위 인수 테스트(UIT)는 존재하지 않는 용어입니다."
+                },
+                {
+                    question: "테스트 데이터의 특성으로 옳지 않은 것은?",
+                    options: [
+                        "본래 값을 추측할 수 없도록 스크램블링되어야 한다",
+                        "애플리케이션 체크 로직을 통과할 수 있어야 한다",
+                        "운영 가능한 범위 내에서 생성되어야 한다",
+                        "실제 운영 데이터를 그대로 사용해야 한다"
+                    ],
+                    correct: 3,
+                    explanation: "테스트 데이터는 본래 값을 추측할 수 없도록 스크램블링하고, 애플리케이션 체크 로직을 통과할 수 있어야 하며, 운영 가능한 범위 내에서 생성되어야 합니다. 실제 운영 데이터를 그대로 사용하는 것은 보안상 위험합니다."
+                },
+                {
+                    question: "단위 테스트에서 중점적으로 테스트하는 항목이 아닌 것은?",
+                    options: ["인터페이스", "수행 경로", "모듈 간 데이터 흐름", "자료 구조"],
+                    correct: 2,
+                    explanation: "단위 테스트에서는 인터페이스, 수행 경로, 오류 처리, 자료 구조, 경곗값 등을 중점적으로 테스트합니다. 모듈 간 데이터 흐름은 통합 테스트에서 다루는 영역입니다."
+                },
+                {
+                    question: "통합 테스트에서 사용되는 테스트 케이스 설계 기법은?",
+                    options: [
+                        "균등 분할 기법과 경곗값 분석 기법",
+                        "화이트박스 테스트 기법만",
+                        "블랙박스 테스트 기법만",
+                        "랜덤 테스트 기법"
+                    ],
+                    correct: 0,
+                    explanation: "통합 테스트에서는 균등 분할 기법과 경곗값 분석 기법을 사용하여 테스트 케이스를 설계합니다. 이는 입력 데이터를 효과적으로 분할하여 테스트하는 기법입니다."
+                },
+                {
+                    question: "인수 테스트의 주요 인수 기준이 아닌 것은?",
+                    options: ["기능적 요구사항 충족", "성능 요구사항 충족", "코드 복잡도 최소화", "보안 요구사항 충족"],
+                    correct: 2,
+                    explanation: "인수 테스트의 주요 인수 기준에는 기능적 요구사항 충족, 성능 요구사항 충족, 보안 요구사항 충족, 사용성 및 접근성, 데이터 무결성 및 정확성 등이 있습니다. 코드 복잡도 최소화는 개발 품질 기준이지 인수 기준이 아닙니다."
+                },
+                {
+                    question: "테스트 레벨의 올바른 순서는?",
+                    options: [
+                        "통합 테스트 → 단위 테스트 → 시스템 테스트 → 인수 테스트",
+                        "단위 테스트 → 통합 테스트 → 시스템 테스트 → 인수 테스트",
+                        "시스템 테스트 → 통합 테스트 → 단위 테스트 → 인수 테스트",
+                        "인수 테스트 → 시스템 테스트 → 통합 테스트 → 단위 테스트"
+                    ],
+                    correct: 1,
+                    explanation: "테스트 레벨은 일반적으로 단위 테스트 → 통합 테스트 → 시스템 테스트 → 인수 테스트 순서로 진행됩니다. 이는 작은 단위부터 전체 시스템까지 점진적으로 확장하는 방식입니다."
+                },
+                {
+                    question: "SW 테스트에서 '결함 관리'의 주요 활동이 아닌 것은?",
+                    options: ["결함 발견 및 기록", "결함 분석 및 분류", "결함 수정 및 재테스트", "결함 예방을 위한 코드 작성"],
+                    correct: 3,
+                    explanation: "결함 관리의 주요 활동에는 결함 발견 및 기록, 결함 분석 및 분류, 결함 수정 및 재테스트, 결함 추적 등이 있습니다. 결함 예방을 위한 코드 작성은 개발 활동이지 테스트 결함 관리 활동이 아닙니다."
+                },
+                {
+                    question: "테스트 케이스에 포함되어야 하는 요소가 아닌 것은?",
+                    options: ["입력값", "예상 출력값", "테스트 환경", "개발자 정보"],
+                    correct: 3,
+                    explanation: "테스트 케이스에는 입력값, 예상 출력값, 테스트 환경, 사전 조건 및 사후 조건 등이 포함되어야 합니다. 개발자 정보는 테스트 케이스의 필수 요소가 아닙니다."
+                },
+                {
+                    question: "통합 테스트의 주요 목적은?",
+                    options: [
+                        "개별 모듈의 기능 검증",
+                        "모듈 간 인터페이스 관련 결함 발견",
+                        "사용자 요구사항 충족 확인",
+                        "시스템 성능 측정"
+                    ],
+                    correct: 1,
+                    explanation: "통합 테스트의 주요 목적은 모듈 간의 체계적인 조합 과정에서 발생하는 인터페이스 관련 결함을 발견하고 제거하는 것입니다."
+                }
+            ],
+            module07: [
+                {
+                    question: "SW 개발방법론의 정의로 가장 적절한 것은?",
+                    options: [
+                        "소프트웨어를 빠르게 개발하기 위한 도구",
+                        "소프트웨어 개발 프로젝트를 체계적이고 효율적으로 수행하기 위한 일련의 절차, 기법, 도구 및 지침의 집합",
+                        "프로그래밍 언어를 선택하는 기준",
+                        "소프트웨어 테스트를 자동화하는 방법"
+                    ],
+                    correct: 1,
+                    explanation: "SW 개발방법론은 '소프트웨어 개발 프로젝트를 체계적이고 효율적으로 수행하기 위한 일련의 절차, 기법, 도구 및 지침의 집합'입니다. SDLC의 모든 단계에 걸쳐 개발 과정을 체계적으로 관리합니다."
+                },
+                {
+                    question: "SW 개발방법론의 진화 순서로 올바른 것은?",
+                    options: [
+                        "애자일 → 객체지향 → 구조적",
+                        "구조적 → 애자일 → 객체지향",
+                        "객체지향 → 구조적 → 애자일",
+                        "구조적 → 객체지향 → 애자일"
+                    ],
+                    correct: 3,
+                    explanation: "SW 개발방법론은 전통적인 구조적 방법론(폭포수 모델)에서 객체지향 방법론을 거쳐 애자일 방법론으로 발전해왔습니다."
+                },
+                {
+                    question: "폭포수(Waterfall) 모델의 특징이 아닌 것은?",
+                    options: [
+                        "각 개발 단계가 순차적으로 진행된다",
+                        "이전 단계가 완료되어야 다음 단계로 넘어간다",
+                        "요구사항 변경에 유연하게 대응한다",
+                        "각 단계가 명확하고 문서화가 철저하다"
+                    ],
+                    correct: 2,
+                    explanation: "폭포수 모델은 각 단계가 순차적으로 진행되는 선형적인 개발 모델로, 각 단계가 명확하고 문서화가 철저하다는 장점이 있지만, 요구사항 변경에 취약하고 피드백 반영이 어렵다는 단점이 있습니다."
+                },
+                {
+                    question: "객체지향 방법론의 장점이 아닌 것은?",
+                    options: ["재사용성", "유지보수성", "확장성", "개발 속도"],
+                    correct: 3,
+                    explanation: "객체지향 방법론의 장점으로는 재사용성, 유지보수성, 확장성이 뛰어나다는 점이 있습니다. 개발 속도는 객체지향 방법론의 주요 장점으로 언급되지 않습니다."
+                },
+                {
+                    question: "애자일 방법론의 핵심 가치가 아닌 것은?",
+                    options: [
+                        "개인과 상호작용이 프로세스와 도구보다 중요",
+                        "작동하는 소프트웨어가 포괄적인 문서보다 중요",
+                        "계약 협상이 고객과의 협력보다 중요",
+                        "변화에 대한 반응이 계획을 따르는 것보다 중요"
+                    ],
+                    correct: 2,
+                    explanation: "애자일 방법론의 핵심 가치는 '고객과의 협력이 계약 협상보다 중요'합니다. 계약 협상이 고객과의 협력보다 중요하다는 것은 애자일 가치와 반대됩니다."
+                },
+                {
+                    question: "애자일과 전통적 개발방법론의 비교에서 올바른 것은?",
+                    options: [
+                        "애자일: 계획 중심, 전통적: 적응 중심",
+                        "애자일: 문서 중심, 전통적: 코드 중심",
+                        "애자일: 적응 중심, 전통적: 계획 중심",
+                        "애자일: 후반 피드백, 전통적: 지속적 피드백"
+                    ],
+                    correct: 2,
+                    explanation: "애자일은 적응 중심이고 전통적 방법론은 계획 중심입니다. 애자일은 초기 계획보다는 변화에 대한 적응을 강조합니다."
+                },
+                {
+                    question: "스크럼(SCRUM)에서 '스프린트'의 일반적인 기간은?",
+                    options: ["1일", "1~4주", "1~6개월", "1년"],
+                    correct: 1,
+                    explanation: "스프린트는 짧은 고정된 시간 주기로 보통 1~4주 내에 제품을 개발하는 반복 단위입니다."
+                },
+                {
+                    question: "스크럼에서 '프로덕트 백로그'는 무엇인가?",
+                    options: [
+                        "완료된 기능 목록",
+                        "개발할 기능 목록",
+                        "발견된 버그 목록",
+                        "팀원들의 작업 일정"
+                    ],
+                    correct: 1,
+                    explanation: "프로덕트 백로그(Product Backlog)는 개발할 기능 목록을 의미합니다. 제품의 요구사항들이 우선순위에 따라 정리된 목록입니다."
+                },
+                {
+                    question: "스크럼 팀의 역할이 아닌 것은?",
+                    options: ["프로덕트 오너", "스크럼 마스터", "개발 팀", "프로젝트 매니저"],
+                    correct: 3,
+                    explanation: "스크럼 팀의 역할에는 프로덕트 오너(Product Owner), 스크럼 마스터(Scrum Master), 개발 팀(Development Team)이 있습니다. 프로젝트 매니저는 전통적인 프로젝트 관리 역할로 스크럼 팀의 공식적인 역할이 아닙니다."
+                },
+                {
+                    question: "프로덕트 오너(Product Owner)의 주요 역할은?",
+                    options: [
+                        "코드 작성 및 테스트",
+                        "팀의 스크럼 프로세스 준수 지원",
+                        "제품의 비전과 가치를 정의하고 백로그 우선순위 관리",
+                        "일일 스크럼 회의 주관"
+                    ],
+                    correct: 2,
+                    explanation: "프로덕트 오너는 제품의 비전과 가치를 정의하고 백로그 우선순위를 관리하는 역할을 담당합니다. 제품의 방향성을 결정하는 핵심 역할입니다."
+                },
+                {
+                    question: "스크럼 마스터(Scrum Master)의 주요 역할은?",
+                    options: [
+                        "제품 기능 우선순위 결정",
+                        "팀의 스크럼 프로세스 준수 지원 및 장애물 제거",
+                        "코드 리뷰 및 품질 관리",
+                        "고객과의 계약 협상"
+                    ],
+                    correct: 1,
+                    explanation: "스크럼 마스터는 팀의 스크럼 프로세스 준수를 지원하고 장애물을 제거하는 역할을 담당합니다. 팀이 스크럼을 효과적으로 실행할 수 있도록 돕는 서번트 리더입니다."
+                },
+                {
+                    question: "일일 스크럼(Daily Scrum)의 주요 목적은?",
+                    options: [
+                        "상세한 기술 설계 논의",
+                        "진척 상황 공유 및 문제점 식별",
+                        "성과 평가 및 보상 결정",
+                        "새로운 요구사항 수집"
+                    ],
+                    correct: 1,
+                    explanation: "일일 스크럼은 매일 진행되는 짧은 회의로, 팀원들이 진척 상황을 공유하고 문제점을 식별하는 것이 주요 목적입니다."
+                },
+                {
+                    question: "스프린트 백로그(Sprint Backlog)는 무엇인가?",
+                    options: [
+                        "전체 프로젝트의 요구사항 목록",
+                        "스프린트 목표 달성을 위해 선택된 프로덕트 백로그 항목과 태스크 목록",
+                        "완료된 작업 목록",
+                        "다음 스프린트 계획안"
+                    ],
+                    correct: 1,
+                    explanation: "스프린트 백로그는 스프린트 목표 달성을 위해 선택된 프로덕트 백로그 항목과 이를 구현하기 위한 태스크 목록입니다."
+                },
+                {
+                    question: "스프린트 리뷰(Sprint Review)의 목적은?",
+                    options: [
+                        "팀원들의 개인 성과 평가",
+                        "스프린트 결과물 시연 및 피드백",
+                        "다음 스프린트 계획 수립",
+                        "프로세스 개선 방안 논의"
+                    ],
+                    correct: 1,
+                    explanation: "스프린트 리뷰는 스프린트 결과물을 시연하고 이해관계자들로부터 피드백을 받는 것이 목적입니다."
+                },
+                {
+                    question: "스프린트 회고(Sprint Retrospective)의 목적은?",
+                    options: [
+                        "제품 기능 시연",
+                        "고객 피드백 수집",
+                        "프로세스 개선을 위한 팀 회고",
+                        "다음 스프린트 백로그 선정"
+                    ],
+                    correct: 2,
+                    explanation: "스프린트 회고는 프로세스 개선을 위한 팀 회고 시간으로, 팀이 더 효과적으로 일할 수 있는 방법을 찾는 것이 목적입니다."
+                },
+                {
+                    question: "구조적 방법론에서 주로 사용되는 도구가 아닌 것은?",
+                    options: ["데이터 흐름도(DFD)", "구조도(Structure Chart)", "UML 다이어그램", "처리 명세서"],
+                    correct: 2,
+                    explanation: "구조적 방법론에서는 데이터 흐름도(DFD), 구조도(Structure Chart) 등을 주로 사용합니다. UML 다이어그램은 객체지향 방법론에서 사용되는 도구입니다."
+                },
+                {
+                    question: "객체지향 방법론과 구조적 방법론의 차이점으로 올바른 것은?",
+                    options: [
+                        "객체지향은 기능 중심, 구조적은 데이터 중심",
+                        "객체지향은 데이터와 기능을 분리, 구조적은 통합",
+                        "객체지향은 데이터와 기능을 하나의 객체로 통합, 구조적은 기능 중심으로 분할",
+                        "둘 다 동일한 접근 방식"
+                    ],
+                    correct: 2,
+                    explanation: "객체지향 방법론은 데이터와 기능을 하나의 객체로 묶어 관리하는 반면, 구조적 방법론은 소프트웨어 개발을 기능 중심으로 분할하고 논리적인 구조와 절차에 따라 개발합니다."
+                },
+                {
+                    question: "애자일 방법론 적용 시 고려사항이 아닌 것은?",
+                    options: [
+                        "팀원 간의 강한 협업과 의사소통이 필요",
+                        "변화에 대한 유연한 태도가 필요",
+                        "모든 프로젝트에 적합하다",
+                        "고객과의 지속적인 협력이 필요"
+                    ],
+                    correct: 2,
+                    explanation: "애자일 방법론은 모든 프로젝트에 적합하지 않습니다. 팀원 간의 강한 협업과 의사소통, 변화에 대한 유연한 태도가 요구되며, 프로젝트의 특성을 고려하여 적용해야 합니다."
+                },
+                {
+                    question: "SW 개발방법론이 다루는 영역이 아닌 것은?",
+                    options: ["프로젝트 관리", "요구사항 관리", "하드웨어 설계", "테스트"],
+                    correct: 2,
+                    explanation: "SW 개발방법론은 프로젝트 관리, 요구사항 관리, 설계, 구현, 테스트, 배포 및 유지보수 등 SDLC의 모든 단계를 다룹니다. 하드웨어 설계는 소프트웨어 개발방법론의 직접적인 영역이 아닙니다."
+                }
+            ]
+        };
+
+        let currentModule = '';
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        let answered = false;
+        
+        // ✨ 수정된 부분: 함수에 'event' 매개변수 추가
+        function startQuiz(moduleId, event) {
+            currentModule = moduleId;
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedAnswer = null;
+            answered = false;
+
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('quiz-container').classList.add('active');
+            document.getElementById('results').style.display = 'none';
+            
+            // 모듈 버튼 활성화 표시
+            document.querySelectorAll('.module-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            updateQuestion();
+        }
+
+        function updateQuestion() {
+            const questions = quizData[currentModule];
+            const question = questions[currentQuestionIndex];
+            
+            // 진행률 업데이트
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            
+            // 문제 번호 업데이트
+            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+            document.getElementById('total-questions').textContent = questions.length;
+            
+            // 문제 내용 업데이트
+            const questionContainer = document.getElementById('question-container');
+            questionContainer.innerHTML = `
+                <h3>${question.question}</h3>
+                <div class="options">
+                    ${question.options.map((option, index) => `
+                        <div class="option" onclick="selectAnswer(${index})">${option}</div>
+                    `).join('')}
+                </div>
+                <div class="explanation" id="explanation">
+                    <h4>💡 정답 및 해설</h4>
+                    <p><strong>정답:</strong> ${question.options[question.correct]}</p>
+                    <p><strong>해설:</strong> ${question.explanation}</p>
+                </div>
+            `;
+            
+            // 다음 버튼 비활성화
+            document.getElementById('next-btn').disabled = true;
+            answered = false;
+        }
+
+        function selectAnswer(index) {
+            if (answered) return;
+            
+            selectedAnswer = index;
+            answered = true;
+            
+            const questions = quizData[currentModule];
+            const question = questions[currentQuestionIndex];
+            const options = document.querySelectorAll('.option');
+            
+            // 모든 옵션 비활성화
+            options.forEach(option => option.style.pointerEvents = 'none');
+            
+            // 정답/오답 표시
+            options[question.correct].classList.add('correct');
+            if (selectedAnswer !== question.correct) {
+                options[selectedAnswer].classList.add('incorrect');
+            } else {
+                score++;
+            }
+            
+            // 해설 표시
+            document.getElementById('explanation').classList.add('show');
+            
+            // 다음 버튼 활성화
+            document.getElementById('next-btn').disabled = false;
+            
+            // 마지막 문제인 경우 버튼 텍스트 변경
+            if (currentQuestionIndex === questions.length - 1) {
+                document.getElementById('next-btn').textContent = '결과 보기';
+            }
+        }
+
+        function nextQuestion() {
+            const questions = quizData[currentModule];
+            
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                updateQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const questions = quizData[currentModule];
+            const percentage = Math.round((score / questions.length) * 100);
+            
+            let grade, gradeClass, message;
+            if (percentage >= 90) {
+                grade = '우수!';
+                gradeClass = 'excellent';
+                message = '훌륭합니다! IT 지식이 매우 뛰어나시네요! 🎉';
+            } else if (percentage >= 70) {
+                grade = '양호!';
+                gradeClass = 'good';
+                message = '잘 하셨습니다! 좋은 IT 지식을 가지고 계시네요! 👍';
+            } else if (percentage >= 50) {
+                grade = '보통';
+                gradeClass = 'average';
+                message = '괜찮습니다! 조금 더 학습하시면 더 좋을 것 같아요! 📚';
+            } else {
+                grade = '개선 필요';
+                gradeClass = 'poor';
+                message = '더 열심히 공부해보세요! 화이팅! 💪';
+            }
+            
+            const moduleName = currentModule === 'module06' ? 'SW 테스트' : 'SW 개발방법론';
+            
+            document.getElementById('quiz-container').classList.remove('active');
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('results').innerHTML = `
+                <h2>🎯 퀴즈 완료!</h2>
+                <p><strong>${moduleName}</strong> 모듈 결과</p>
+                <div class="score ${gradeClass}">${score}/${questions.length}</div>
+                <p><strong>${percentage}% (${grade})</strong></p>
+                <p>${message}</p>
+                <button class="restart-btn" onclick="restartQuiz()">다시 시작</button>
+            `;
+        }
+
+        function restartQuiz() {
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('intro').style.display = 'block';
+            document.getElementById('quiz-container').classList.remove('active');
+            document.querySelectorAll('.module-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('next-btn').textContent = '다음 문제';
+        }
+    </script>
+</body>
+</html>
