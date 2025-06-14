@@ -286,6 +286,7 @@
         </div>
         
         <div class="module-selector">
+            <button class="module-btn" onclick="startQuiz('module03', event)">Module 03: 프로세스 모델링 개요</button>
             <button class="module-btn" onclick="startQuiz('module04', event)">Module 04: 프로세스 모델링</button>
             <button class="module-btn" onclick="startQuiz('module05', event)">Module 05: Function Poin</button>
             <button class="module-btn" onclick="startQuiz('module06', event)">Module 06: SW 테스트</button>
@@ -762,7 +763,6 @@
                 explanation: "UI 설계 원칙에는 일관성, 유연성, 효율성, 명확성, 가독성, 사용성, 접근성 등이 포함됩니다. 복잡성과 다양성은 UI 설계에서 지양해야 할 요소입니다."
             }
         ];
-
             module05: [    
             {
                 question: "Function Point의 정의로 가장 적절한 것은?",
@@ -918,8 +918,111 @@
                 correct: 1,
                 explanation: "데이터 기능(ILF, EIF)은 데이터 저장과 관련되고, 트랜잭션 기능(EI, EO, EQ)은 데이터 처리 로직과 관련됩니다."
             }
+        ];
+                module03: [             
+            {
+              question: "프로젝트 계획서의 정의로 가장 적절한 것은?",
+              options: ["프로젝트 결과물을 기록한 문서", "프로젝트 수행에 필요한 목표, 일정, 예산, 자원, 위험 요소 등을 문서화한 공식 문서", "프로젝트 팀원의 역할을 정의한 문서", "프로젝트 완료 후 평가 결과를 담은 문서"],
+              correct: 1,
+              explanation: "프로젝트 계획서는 프로젝트 수행에 필요한 목표, 일정, 예산, 자원, 위험 요소 등을 문서화한 공식 문서로, 프로젝트의 성공적인 수행을 위한 명확한 로드맵을 제공합니다."
+            },
+            {
+              question: "WBS(Work Breakdown Structure)의 정의로 올바른 것은?",
+              options: ["프로젝트 예산을 분할한 구조도", "프로젝트 범위와 일정을 세부적으로 나눈 작업 분할 구조도", "프로젝트 팀원의 조직도", "프로젝트 위험 요소 분석표"],
+              correct: 1,
+              explanation: "WBS는 프로젝트 범위와 일정을 세부적으로 나눈 작업 분할 구조도로, 프로젝트 목표 달성을 위해 필요한 활동과 업무를 계층으로 구조화하고 관리 가능한 수준으로 세분화합니다."
+            },
+            {
+              question: "WBS의 목적에 해당하지 않는 것은?",
+              options: ["프로젝트 범위 정의 및 명확화", "관리 용이성 확보", "고객 만족도 조사", "책임 할당 및 의사소통"],
+              correct: 2,
+              explanation: "WBS의 목적은 프로젝트 범위 정의, 관리 용이성 확보, 책임 할당 및 의사소통, 성과 측정 및 추적, 리스크 식별 및 관리, 프로젝트 통제 및 변경 관리입니다. 고객 만족도 조사는 WBS의 직접적인 목적이 아닙니다."
+            },
+            {
+              question: "현행 시스템 분석의 정의로 가장 적절한 것은?",
+              options: ["새로운 시스템을 설계하는 과정", "현행 시스템 및 업무를 비즈니스와 데이터 관점에서 분석하여 이해하는 과정", "시스템 성능을 개선하는 과정", "사용자 교육을 계획하는 과정"],
+              correct: 1,
+              explanation: "현행 시스템 분석은 현행 시스템 및 업무를 비즈니스와 데이터 관점에서 분석하여 이해하는 과정으로, 업무 영역의 핵심 프로세스를 파악하고 향후 데이터 분석 및 전환 자료로 활용합니다."
+            },
+            {
+              question: "현행 업무 분석에서 사용되는 방법이 아닌 것은?",
+              options: ["사용자 인터뷰", "역공학(Reverse Engineering) 분석", "코드 리뷰", "현행 업무 분석서 작성"],
+              correct: 2,
+              explanation: "현행 업무 분석 방법에는 사용자 인터뷰(업무 전문가와의 심층 대화), 역공학 분석(기존 시스템 분석), 현행 업무 분석서 작성이 포함됩니다. 코드 리뷰는 직접적인 현행 업무 분석 방법이 아닙니다."
+            },
+            {
+              question: "IEEE 표준용어집(1990)에 따른 요구사항의 정의는?",
+              options: ["시스템이 제공해야 하는 기능", "문제를 해결하거나 목적을 달성하기 위하여 사용자가 필요로 하는 조건 또는 기능", "개발자가 구현해야 하는 사양", "고객이 원하는 결과물"],
+              correct: 1,
+              explanation: "IEEE 표준용어집(1990)에 따르면, 요구사항은 '문제를 해결하거나 목적을 달성하기 위하여 사용자가 필요로 하는 조건 또는 기능'으로 정의됩니다."
+            },
+            {
+              question: "요구사항 도출이 어려운 이유에 해당하지 않는 것은?",
+              options: ["고객의 지식 부족", "참여 부족", "기술의 복잡성", "의사소통 방법 및 스킬 부족"],
+              correct: 2,
+              explanation: "요구사항 도출이 어려운 이유로는 고객의 지식 부족, 참여 부족, 범위 및 베이스라인 확정 부담, 의사소통 스킬 부족, 업무 전문가 부족, 시간 및 일정 부족 등이 있습니다. 기술의 복잡성은 직접적인 요구사항 도출의 어려움이 아닙니다."
+            },
+            {
+              question: "요구사항 도출 절차의 올바른 순서는?",
+              options: ["요구사항 검토 → 요구사항 수집 → 요구사항 정의", "요구사항 수집 → 요구사항 정의 → 요구사항 검토", "요구사항 정의 → 요구사항 수집 → 요구사항 검토", "요구사항 수집 → 요구사항 검토 → 요구사항 정의"],
+              correct: 1,
+              explanation: "요구사항 도출 절차는 요구사항 수집 → 요구사항 정의 → 요구사항 검토 순서로 진행됩니다. 먼저 수집하고, 정의한 후, 검토하는 것이 논리적 순서입니다."
+            },
+            {
+              question: "요구사항 수집 기법에 해당하지 않는 것은?",
+              options: ["인터뷰", "워크숍", "프로토타이핑", "데이터 마이그레이션"],
+              correct: 3,
+              explanation: "요구사항 수집 기법에는 인터뷰, 설문조사, 워크숍, 벤치마킹, 사용자 시나리오, 프로토타이핑, 브레인스토밍, Use Case 분석, 역공학 분석 등이 있습니다. 데이터 마이그레이션은 시스템 구축 단계의 활동입니다."
+            },
+            {
+              question: "Standish Report와 Boehm이 언급한 프로젝트 실패의 주요 원인은?",
+              options: ["기술적 복잡성", "예산 부족", "요구사항 관련 문제", "인력 부족"],
+              correct: 2,
+              explanation: "Standish Report에 따르면 '프로젝트 실패는 대부분 요구사항에 관련된 문제로 인한 것'이며, Boehm은 '프로젝트 실패 제1원인은 고객 니즈 이해 부족으로 인한 요구사항 변경'이라고 하여 요구사항 관리의 중요성을 강조했습니다."
+            },
+            {
+              question: "API의 REST 아키텍처에서 사용되는 HTTP 메서드 중 데이터를 수정할 때 주로 사용되는 것은?",
+              options: ["GET", "POST", "PUT", "DELETE"],
+              correct: 2,
+              explanation: "PUT은 REST API에서 기존 리소스를 수정하거나 업데이트할 때 사용되는 HTTP 메서드입니다. GET은 조회, POST는 생성, DELETE는 삭제에 사용됩니다."
+            },
+            {
+              question: "데이터베이스에서 ACID 속성에 해당하지 않는 것은?",
+              options: ["Atomicity (원자성)", "Consistency (일관성)", "Isolation (독립성)", "Durability (지속성)", "Availability (가용성)"],
+              correct: 4,
+              explanation: "ACID는 Atomicity(원자성), Consistency(일관성), Isolation(독립성), Durability(지속성)의 4가지 속성을 말합니다. Availability(가용성)는 CAP 정리의 구성 요소입니다."
+            },
+            {
+              question: "사이버 보안에서 '피싱(Phishing)'이란?",
+              options: ["네트워크 속도를 측정하는 도구", "악성 코드의 한 종류", "개인정보를 속여서 빼내는 사회공학적 공격", "데이터베이스 최적화 기법"],
+              correct: 2,
+              explanation: "피싱(Phishing)은 가짜 이메일이나 웹사이트를 통해 사용자를 속여 개인정보나 금융정보를 빼내는 사회공학적 공격 기법입니다."
+            },
+            {
+              question: "DevOps에서 CI/CD의 'CI'는 무엇을 의미하나요?",
+              options: ["Code Integration", "Continuous Integration", "Central Intelligence", "Computer Interface"],
+              correct: 1,
+              explanation: "CI는 Continuous Integration(지속적 통합)을 의미합니다. 개발자들이 코드 변경사항을 정기적으로 메인 브랜치에 통합하여 통합 문제를 조기에 발견하고 해결하는 개발 방법론입니다."
+            },
+            {
+              question: "빅데이터의 3V 특성에 해당하지 않는 것은?",
+              options: ["Volume (양)", "Velocity (속도)", "Variety (다양성)", "Visibility (가시성)"],
+              correct: 3,
+              explanation: "빅데이터의 3V는 Volume(데이터의 양), Velocity(데이터 처리 속도), Variety(데이터의 다양성)을 의미합니다. Visibility는 빅데이터의 기본 특성에 포함되지 않습니다."
+            },
+            {
+              question: "블록체인에서 '합의 알고리즘'의 역할은?",
+              options: ["데이터를 암호화하는 것", "네트워크 참여자들이 동일한 블록을 인정하도록 하는 것", "거래 수수료를 계산하는 것", "사용자 인증을 처리하는 것"],
+              correct: 1,
+              explanation: "합의 알고리즘은 분산된 블록체인 네트워크에서 모든 참여자가 동일한 블록과 거래 내역에 대해 합의하도록 하는 메커니즘입니다. 대표적으로 PoW, PoS 등이 있습니다."
+            },
+            {
+              question: "소프트웨어 개발에서 '애자일(Agile) 방법론'의 핵심 가치가 아닌 것은?",
+              options: ["개인과 상호작용", "작동하는 소프트웨어", "고객과의 협력", "완벽한 문서화"],
+              correct: 3,
+              explanation: "애자일 선언문에서는 '포괄적인 문서보다 작동하는 소프트웨어'를 가치로 합니다. 완벽한 문서화보다는 실제 작동하는 소프트웨어와 고객과의 소통을 중시합니다."
+            }   
         ];  
-        };
 
         let currentModule = '';
         let currentQuestionIndex = 0;
